@@ -1,0 +1,193 @@
+---
+title: 'SEMINAIRE: Rmarkdown'
+author: "Koffi AMEZOUWUI"
+date: "07/04/2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1) R Markdown
+### a) Guide de démarrage en R markdown
+Vous avez entendu parler de génération de rapports dynamiques incorporant du code R, les sorties de ce code et des commentaires, mais vous ne savez pas par où commencer ? Je vais vous expliquer comment ça marche et vous donner les quelques éléments nécessaires pour débuter facilement dans la production de ces rapports dynamiques.
+
+Les rapports peuvent, en outre, être générés sous divers formats, html, pdf ou docx, par exemple. Au final le langage R markdown, est un outil parfaitement adapté à la collaboration (y compris avec vous-même) et à la diffusion des résultats.
+
+### b) Avant de commencer
+Organisez votre travail sous la forme d'un projet R.
+Créer un dossier sous windows à l’emplacement souhaité, puis dans R Studio puis installez et chargez les packages: rmarkdown, markdown et knitr
+
+```{r}
+#install.packages("knitr") # permet d'installer ce package
+#install.packages("rmarkdown") # permet d'installer ce package
+#install.packages("markdown") # permet d'installer ce package
+library(knitr)  # permet de charger ce package 
+library(rmarkdown) # permet de charger ce package
+library(markdown) # permet de charger ce package
+```
+
+### c) Générer votre premier rapport dynamique
+Ouvrez un nouveau fichier R markdown et enregistrez le suivant:
+File –> New File –> Rmarkdown
+
+Laissez toutes les options par défaut (document et html), et remplissez le champs “Title” , ce titre correspondra au titre du document, il peut être long.
+
+Enregistrez le, en lui donnant un nom (un nom de fichie cette fois, “Koffiessaie” par exemple):
+
+File –> Save ou CTRL + S
+
+Lancer la génération du document
+Pour cela, c’est très simple, cliquez sur le bouton avec la pelote de laine et les aiguilles.
+
+Un fichier html portant le même nom que le fichier.Rmd est alors créé dans le working directory (là où vous avez créé votre projet R), et en même temps le rapport généré s’ouvre dans le viewer de R Studio. 
+
+En cliquant sur la flèche vers le bas, du bouton knit vous pourrez changer le format de sortie du rapport dynamique.
+
+Le format par défaut est celui choisi à l’étape précédente, c’est à dire html, ici. Vous pourrez choisir Word ou pdf. Pour obtenir votre rapport au format pdf, vous devez d’abord télécharger MikTeX et lors de l’installation, choisir “install missing packages”. Vous pouvez aussi choisir cette option après l’installation en allant dans “settings”.
+
+Maintenant que vous avez vu le rendu, nous allons regarder de plus prés le fichier Rmd
+
+# 2) Organisation du fichier Rmd
+### a) L'en tête
+
+L’en-tête est contenu entre deux séries de pointillés.
+Par défaut, il contient deux types d’éléments : le titre du document, et son format de sortie. Il est possible d’ajouter d’autres éléments, comme l’auteur, et la date de création, par exemple.
+
+### b) Les chunks contenant le code R
+```{r cars}
+summary(cars)
+```
+
+Les parties de code R sont contenues dans des blocs, appelés chunks”. Ces chunks commencent et finissent par les balises  “`
+
+Entre les deux, se trouve une accolade contenant la lettre r. C’est dans cette accolade, après la lettre r (il ne faut pas l’enlever) que les options vont pouvoir être passées, pour choisir de faire apparaître, ou non, le code dans le rapport dynamique, ainsi que les résultats, ou encore pour définir la taille des plots.
+
+Ces chunks peuvent être nommés. Dans l’exemple précédent, le nom du chunk est cars.
+
+### c) Le chunk set up
+
+Ce chunk se trouve en dessous de l’en-tête, il permet de régler les options par défaut de tous les chunks. Par exemple, on va pouvoir indiquer que l’on ne veut pas faire les messages et les warnings qui pourraient être générés lors de l’exécution des chunck. Au lieu de le faire pour tous les chunks, on peut le faire une seule fois ici.
+
+Et si, pour un chunck donné, on veut faire apparaître les warnings et les messages, on utilisera message=TRUE et warnings=TRUE dans l’accolade du chunck concerné.
+
+### d) Les parties texte
+
+Elles peuvent être insérées partout en dehors des chunks.
+
+Il est possible de mettre en gras, ou en italique, certaines parties du texte.
+
+### e) Quelques éléments pour débuter
+
+Il est possible de mettre en gras, ou en italique, certaines parties du texte.
+Titre, liste, gras, italique
+Voici comment faire des titres, des listes, des puces, mettre en gras et en italique.
+
+
+#1. Un gros titre 
+
+## 1.1 Un plus petit titre
+
+### 1.1.1 Un titre encore plus petit 
+
+Pour faire une liste:
+
+1. Premier point 
+
+2. Deuxième point
+
+Pour mettre des puces
+
+* Premier élement
+  + avec son premier sous élement 
+  + avec son deuxième sous élement
+* Deuxième élement
+  + avec son premier sous élément 
+  + avec son deuxième sous élément 
+  
+Le chifre **trois** et le chifre *deux* en italique.
+
+### f) Gestion du code
+Affichage du code
+
+Par défaut, le code R est affiché lors de la génération du rapport, cela correspond à l’option echo=TRUE. Pour supprimer l’affichage du code, il faut utiliser l’argument echo=FALSE
+
+Ici le code et le resultat son affichés
+```{r}
+summary(cars)
+```
+
+Ici le code n'est pas affiché mais le resultat l'est
+
+```{r, echo=FALSE}
+summary(cars)
+```
+
+
+### g) Affichage du résultat du code
+
+Par défaut, le résultat du code est affiché lors de la génération du rapport, cela correspond à l’option results=”markup”. Pour le supprimer, il faut utiliser l’argument results=”hide”
+
+Ici le code et le resultat son affichés
+```{r}
+summary(cars)
+```
+
+Ici le resultat n'est pas affiché mais le code l'est
+
+```{r ,result='hide'}
+summary(cars)
+```
+
+### h) Gérer la taille des figures
+
+On utilise les arguments fig.width et fig.height
+
+```{r,fig.height=3, fig.width=3}
+plot(mtcars$mpg,mtcars$wt)
+```
+
+
+```{r,fig.height=3, fig.width=6}
+plot(mtcars$mpg,mtcars$wt)
+
+```
+
+### i) Insérer une image
+
+Pour insérer une image, il suffit de placer l’image dans le working directory (par exemple une image nommée “Shoot numeric.jpg” ) et d’utiliser, en dehors d’un chunck, la commande suivante :
+
+![](D:/Strasbourg cours/Semestre 2/Stage ou Memoire/LABORATOIRE E3S STAGE/SEMINAIRE STAGE/Shoot numeric.jpg)
+
+\begin{figure}[h]
+ 	       	\centering
+ 	     	 	\includegraphics[width=1.2 \linewidth]{capture}
+ 	     	 	\caption{Carte du TOGO avec les villes}
+ 	     	 	%\label{fig:capture}
+            	\end{figure} 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
